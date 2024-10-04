@@ -20,6 +20,8 @@ export default async function CustomersPage({
 
   const sessionTokenAuthJs = await getCookie("authjs.session-token");
 
+  console.log("sessionTokenAuthJs: ", sessionTokenAuthJs);
+
   // Determine the current page, default to 0 if not specified(maybe change it to 1)
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
   const skip = (currentPage - 1) * 10;
