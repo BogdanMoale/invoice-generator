@@ -15,7 +15,11 @@ export default async function CustomersPage({
   searchParams: { page?: string };
 }) {
   const getCookie = async (name: string) => {
-    return cookies().get(name)?.value ?? "";
+    return (
+      cookies().get(`_Secure-${name}`)?.value ??
+      cookies().get(name)?.value ??
+      ""
+    );
   };
 
   const sessionTokenAuthJs = await getCookie("authjs.session-token");
