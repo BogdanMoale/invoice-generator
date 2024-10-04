@@ -20,7 +20,7 @@ const PaymentsPage = async ({
     return cookies().get(name)?.value ?? "";
   };
 
-  const sessionTokenAuthJs = await getCookie("authjs.session-token");
+  const sessionTokenAuthJs = getCookie("authjs.session-token");
 
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
   const skip = (currentPage - 1) * 10;
