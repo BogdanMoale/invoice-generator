@@ -8,8 +8,6 @@ import { getUserByEmail } from "@/helpers/user-data";
 // import { generateVerificationToken } from "@/lib/tokens";
 // import { sendEmail } from "@/lib/email";
 
-export const runtime = "nodejs";
-
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   //validate the values on the backend
   const validationResult = RegisterSchema.safeParse(values);
