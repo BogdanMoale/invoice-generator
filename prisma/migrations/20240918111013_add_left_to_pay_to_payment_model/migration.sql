@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "payments" ADD COLUMN     "leftToPay" DOUBLE PRECISION NOT NULL DEFAULT 0;
