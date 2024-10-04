@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import Customers from "@/components/customers/customers";
 import { Customer } from "@/types";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Customers",
@@ -33,9 +34,7 @@ export default async function CustomersPage({
     const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/customers/get?skip=${skip}&take=${take}`;
     const res = await fetch(apiUrl, {
       method: "GET",
-      headers: {
-        Cookie: `__Secure-authjs.session-token=${sessionTokenAuthJs}`,
-      },
+      headers: headers(), // Forward cookies and headers
       cache: "no-store", // Ensures data is fresh on each fetch
     });
 
