@@ -5,6 +5,10 @@ import { UserSchema } from "@/schemas";
 import { checkAuth } from "@/lib/auth";
 import { getUserByEmail } from "@/helpers/user-data";
 
+export const config = {
+  runtime: "nodejs",
+};
+
 export async function POST(request: Request) {
   const { authenticated, session } = await checkAuth();
 

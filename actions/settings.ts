@@ -7,6 +7,10 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
 
+export const config = {
+  runtime: "nodejs",
+};
+
 export const settings = async (values: z.infer<typeof SettingsSchema>) => {
   const user = await currentUser();
   if (!user) {
