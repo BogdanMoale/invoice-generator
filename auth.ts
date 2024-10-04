@@ -60,6 +60,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   adapter: PrismaAdapter(db),
-  session: { strategy: "jwt", maxAge: 60 * 60 }, //1 hour session
+  session: {
+    strategy: "jwt", // JWT strategy for sessions
+    maxAge: 60 * 60, // Session expires in 1 hour
+  },
+  cookies: {
+    sessionToken: {
+      name:
+        process.env.NODE_ENV === "production"
+          ? "__Secure-authjs.session-token"
+          : "authjs.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production", // Secure cookies only in production
+      },
+    },
+  },
   ...authConfig,
 });
