@@ -15,14 +15,10 @@ export default async function CustomersPage({
   searchParams: { page?: string };
 }) {
   const getCookie = async (name: string) => {
-    return (
-      cookies().get(`_Secure-${name}`)?.value ??
-      cookies().get(name)?.value ??
-      ""
-    );
+    return cookies().get(name)?.value ?? "";
   };
 
-  const sessionTokenAuthJs = await getCookie("authjs.session-token");
+  const sessionTokenAuthJs = await getCookie("__Secure-authjs.session-token");
 
   console.log("sessionTokenAuthJs: ", sessionTokenAuthJs);
 
@@ -38,7 +34,7 @@ export default async function CustomersPage({
     const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
-        Cookie: `authjs.session-token=${sessionTokenAuthJs}`,
+        Cookie: `__Secure-authjs.session-token=${sessionTokenAuthJs}`,
       },
       cache: "no-store", // Ensures data is fresh on each fetch
     });
