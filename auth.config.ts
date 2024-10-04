@@ -6,9 +6,7 @@ import type { NextAuthConfig } from "next-auth";
 import { getUserByEmail } from "@/helpers/user-data";
 import { LoginSchema } from "@/schemas";
 
-export const config = {
-  runtime: "nodejs",
-};
+export const runtime = "nodejs";
 
 export default {
   providers: [

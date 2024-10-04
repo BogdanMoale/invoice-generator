@@ -6,9 +6,7 @@ import { NewPasswordSchema } from "@/schemas";
 import * as z from "zod";
 import bcrypt from "bcryptjs";
 
-export const config = {
-  runtime: "nodejs",
-};
+export const runtime = "nodejs";
 
 export const newPassword = async (
   values: z.infer<typeof NewPasswordSchema>,
