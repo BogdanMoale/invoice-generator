@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs";
 import { UserSchema } from "@/schemas";
 import { checkAuth } from "@/lib/auth";
 
-export const runtime = "nodejs";
 export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
