@@ -37,6 +37,9 @@ const InvoicesPage = async ({
     sessionTokenAuthJs ? "Present" : "Not present"
   );
 
+  const allCookies = cookies();
+  console.log("All cookies:", allCookies);
+
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
   const skip = (currentPage - 1) * 10;
   const take = 10;
