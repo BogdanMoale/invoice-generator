@@ -17,6 +17,9 @@ const UsersPage = async ({
   searchParams: { page?: string };
 }) => {
   const getCookie = async (name: string) => {
+    const secureCookie = cookies().get(`__Secure-${name}`);
+    if (secureCookie?.value) return secureCookie.value;
+
     return cookies().get(name)?.value ?? "";
   };
 
@@ -29,12 +32,16 @@ const UsersPage = async ({
   let initialUsers: User[] = [];
   let totalCount: number = 0;
 
+  const isProduction = process.env.NODE_ENV === "production";
+
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/get/?skip=${skip}&take=${take}`;
     const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
-        Cookie: `authjs.session-token=${sessionTokenAuthJs}`,
+        Cookie: isProduction
+          ? `__Secure-authjs.session-token=${sessionTokenAuthJs}`
+          : `authjs.session-token=${sessionTokenAuthJs}`,
       },
       // cache: "no-store",
     });
