@@ -1,20 +1,14 @@
 import InvoiceTemplateModel1 from "@/components/invoices/template-mod1";
 import InvoiceTemplateModel2 from "@/components/invoices/template-mod2";
 import InvoiceTemplateModel3 from "@/components/invoices/template-mod3";
-import { cookies } from "next/headers";
 import { InvoiceTemplateModelProps } from "@/types";
 import { formatDate } from "@/helpers/format-date";
 import type { Metadata } from "next";
+import { getCookie } from "@/helpers/getCookie";
 
 async function fetchInvoice(
   invoiceId: string
 ): Promise<InvoiceTemplateModelProps> {
-  const getCookie = async (name: string) => {
-    const secureCookie = cookies().get(`__Secure-${name}`);
-    if (secureCookie?.value) return secureCookie.value;
-
-    return cookies().get(name)?.value ?? "";
-  };
   const sessionTokenAuthJs = await getCookie("authjs.session-token");
   const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/invoices/get/${invoiceId}`;
   const isProduction = process.env.NODE_ENV === "production";

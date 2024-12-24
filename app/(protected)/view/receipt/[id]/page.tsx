@@ -1,16 +1,9 @@
 import PaymentReceipt from "@/components/payments/receipt";
 import { Payment } from "@/types";
-import { cookies } from "next/headers";
 import type { Metadata } from "next";
+import { getCookie } from "@/helpers/getCookie";
 
 async function fetchPaymentReceipt(paymentId: string): Promise<Payment> {
-  const getCookie = async (name: string) => {
-    const secureCookie = cookies().get(`__Secure-${name}`);
-    if (secureCookie?.value) return secureCookie.value;
-
-    return cookies().get(name)?.value ?? "";
-  };
-
   const sessionTokenAuthJs = await getCookie("authjs.session-token");
   const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/payments/get/${paymentId}`;
 

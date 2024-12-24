@@ -1,8 +1,7 @@
-import { cookies } from "next/headers";
 import Customers from "@/components/customers/customers";
 import { Customer } from "@/types";
 import type { Metadata } from "next";
-import { headers } from "next/headers";
+import { getCookie } from "@/helpers/getCookie";
 
 export const metadata: Metadata = {
   title: "Customers",
@@ -15,13 +14,6 @@ export default async function CustomersPage({
 }: {
   searchParams: { page?: string };
 }) {
-  const getCookie = async (name: string) => {
-    const secureCookie = cookies().get(`__Secure-${name}`);
-    if (secureCookie?.value) return secureCookie.value;
-
-    return cookies().get(name)?.value ?? "";
-  };
-
   const sessionTokenAuthJs = await getCookie("authjs.session-token");
 
   // Determine the current page, default to 0 if not specified(maybe change it to 1)

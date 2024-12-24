@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import { User } from "@/types";
 import { Spinner } from "@nextui-org/spinner";
 import Users from "@/components/users/users";
-import { cookies } from "next/headers";
 import type { Metadata } from "next";
+import { getCookie } from "@/helpers/getCookie";
 
 export const metadata: Metadata = {
   title: "Users",
@@ -16,13 +16,6 @@ const UsersPage = async ({
 }: {
   searchParams: { page?: string };
 }) => {
-  const getCookie = async (name: string) => {
-    const secureCookie = cookies().get(`__Secure-${name}`);
-    if (secureCookie?.value) return secureCookie.value;
-
-    return cookies().get(name)?.value ?? "";
-  };
-
   const sessionTokenAuthJs = await getCookie("authjs.session-token");
 
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 0;

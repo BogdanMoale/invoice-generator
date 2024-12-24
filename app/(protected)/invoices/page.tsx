@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { Invoice, Customer } from "@prisma/client";
 import { Spinner } from "@nextui-org/spinner";
 import Invoices from "@/components/invoices/invoices";
-import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { getCookie } from "@/helpers/getCookie";
 
@@ -21,13 +20,6 @@ const InvoicesPage = async ({
 }: {
   searchParams: { page?: string };
 }) => {
-  // const getCookie = async (name: string) => {
-  //   const secureCookie = cookies().get(`__Secure-${name}`);
-  //   if (secureCookie?.value) return secureCookie.value;
-
-  //   return cookies().get(name)?.value ?? "";
-  // };
-
   const sessionTokenAuthJs = await getCookie("authjs.session-token");
 
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
