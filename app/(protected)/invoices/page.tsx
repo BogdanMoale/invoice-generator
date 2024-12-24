@@ -20,11 +20,17 @@ const InvoicesPage = async ({
 }: {
   searchParams: { page?: string };
 }) => {
+  console.log("Starting InvoicesPage component");
+
   const getCookie = async (name: string) => {
     return cookies().get(name)?.value ?? "";
   };
 
   const sessionTokenAuthJs = await getCookie("authjs.session-token");
+  console.log(
+    "Session token retrieved:",
+    sessionTokenAuthJs ? "Present" : "Not present"
+  );
 
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
   const skip = (currentPage - 1) * 10;
@@ -35,6 +41,8 @@ const InvoicesPage = async ({
 
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/invoices/get/?skip=${skip}&take=${take}`;
+    console.log("Fetching from URL:", apiUrl);
+
     const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -43,16 +51,26 @@ const InvoicesPage = async ({
       cache: "no-store", // Ensures data is fresh on each fetch
     });
 
+    console.log("Fetch response status:", res.status);
+
     if (!res.ok) {
-      throw new Error(`Failed to fetch invoices`);
+      const errorText = await res.text();
+      console.error("Error response:", errorText);
+      throw new Error(
+        `Failed to fetch invoices: ${res.status} ${res.statusText}`
+      );
     }
 
     const data = await res.json();
+    console.log("Data received:", JSON.stringify(data).slice(0, 100) + "...");
     initialInvoices = data.invoices;
     totalCount = data.totalCount;
   } catch (error) {
+    console.error("Error in try-catch block:", error);
     throw new Error("Error fetching invoices");
   }
+
+  console.log("Rendering InvoicesPage component");
 
   return (
     <Suspense
