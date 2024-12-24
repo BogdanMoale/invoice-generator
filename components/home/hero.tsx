@@ -17,7 +17,7 @@ const HeroSection = () => {
         srcLightDesktop="/hero/desktop/light/hero1.png"
         srcDarkDesktop="/hero/desktop/dark/hero1.png"
         srcLightMobile="/hero/mobile/light/hero1.png"
-        srcDarkMobile="/hero/mobile/dark/hero1.png"
+        srcDarkMobile="/hero/mobile/dark/hero1.PNG"
         alt="Page Hero1"
         width={1024}
         height={632}
