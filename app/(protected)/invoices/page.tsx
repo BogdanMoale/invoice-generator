@@ -35,6 +35,8 @@ const InvoicesPage = async ({
 
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/invoices/get/?skip=${skip}&take=${take}`;
+    console.log('Fetching from URL:', apiUrl); // Log the URL being fetched
+
     const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -44,14 +46,16 @@ const InvoicesPage = async ({
     });
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch invoices`);
+      const errorText = await res.text();
+      throw new Error(`Failed to fetch invoices: ${res.status} ${res.statusText}. ${errorText}`);
     }
 
     const data = await res.json();
     initialInvoices = data.invoices;
     totalCount = data.totalCount;
   } catch (error) {
-    throw new Error("Error fetching invoices");
+    console.error("Error fetching invoices:", error);
+    throw new Error(`Error fetching invoices: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   return (
@@ -72,3 +76,4 @@ const InvoicesPage = async ({
 };
 
 export default InvoicesPage;
+
