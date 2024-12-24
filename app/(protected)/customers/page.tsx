@@ -16,12 +16,13 @@ export default async function CustomersPage({
   searchParams: { page?: string };
 }) {
   const getCookie = async (name: string) => {
+    const secureCookie = cookies().get(`__Secure-${name}`);
+    if (secureCookie?.value) return secureCookie.value;
+
     return cookies().get(name)?.value ?? "";
   };
 
-  const sessionTokenAuthJs = await getCookie("__Secure-authjs.session-token");
-
-  console.log("sessionTokenAuthJs: ", sessionTokenAuthJs);
+  const sessionTokenAuthJs = await getCookie("authjs.session-token");
 
   // Determine the current page, default to 0 if not specified(maybe change it to 1)
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
@@ -30,12 +31,18 @@ export default async function CustomersPage({
   let initialCustomers: Customer[] = [];
   let totalCount: number = 0;
 
+  const isProduction = process.env.NODE_ENV === "production";
+
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/customers/get?skip=${skip}&take=${take}`;
     const res = await fetch(apiUrl, {
       method: "GET",
-      headers: headers(), // Forward cookies and headers
-      cache: "no-store", // Ensures data is fresh on each fetch
+      headers: {
+        Cookie: isProduction
+          ? `__Secure-authjs.session-token=${sessionTokenAuthJs}`
+          : `authjs.session-token=${sessionTokenAuthJs}`,
+      },
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -44,7 +51,6 @@ export default async function CustomersPage({
 
     const data = await res.json();
     initialCustomers = data.customers;
-    //console.log(data.customers);
     totalCount = data.totalCount;
   } catch (error) {
     throw new Error(`Failed to fetch customers`);
