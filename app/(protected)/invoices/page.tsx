@@ -23,6 +23,11 @@ const InvoicesPage = async ({
   console.log("Starting InvoicesPage component");
 
   const getCookie = async (name: string) => {
+    // Try production cookie name first (with _Secure- prefix)
+    const secureCookie = cookies().get(`_Secure-${name}`);
+    if (secureCookie?.value) return secureCookie.value;
+
+    // Fallback to development cookie name
     return cookies().get(name)?.value ?? "";
   };
 
