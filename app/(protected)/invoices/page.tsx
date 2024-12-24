@@ -31,16 +31,12 @@ const InvoicesPage = async ({
     return cookies().get(name)?.value ?? "";
   };
 
-  // const sessionTokenAuthJs = await getCookie("authjs.session-token");
-  const sessionTokenAuthJs =
-    "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiODFvWVRsTjNMblk5aEh5eEo5SmlkZnNkVFE3aVBqcUxxeHR0RTdLVDg5aDNUZFpNWmJ2TzU2M2k5M2h6ZVFRSkpoX0VNYnZUajRzUXFWcWFURkNoUUEifQ..R9HU_XXbjL6n3X4KVFVkGQ.JhRg7yHix9dslIzzDAy-Og4xqJ4QFDpuynwqiY3hNo5rOUVhfnTNYH3PSA5S0EUyuKCVQg_X0xAZGvx8Cchm9uTylFlrSmCJkN2vGQLG9cfQZmh0bWrcLAJrTb8sQ0heuSpgP-ebmwx4tYPSUSTImOSz9L7b7kWF-rVLaFJCzIltRFchLOE67Tg7E5JU2rbmVDKX_-TqMQbPeR2yzekAx0MoEhayCd1FWXllZpqO67ibOY9VCHg-B5fwgk_KQBt5Dp74sJDHh4aJqS1zsCm2j0TDkIHrr2FRPWhuyyuxc1pJJ2_v4N7aR5U5s6HwNNUI.2Pr1VsWfALn4Sa6SeDPMhXIo3aOj86LbhIwo4Emoujc";
+  const sessionTokenAuthJs = await getCookie("authjs.session-token");
+
   console.log(
     "Session token retrieved:",
     sessionTokenAuthJs ? "Present" : "Not present"
   );
-
-  const allCookies = cookies();
-  console.log("All cookies:", allCookies);
 
   const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
   const skip = (currentPage - 1) * 10;
