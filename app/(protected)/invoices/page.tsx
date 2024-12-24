@@ -51,7 +51,6 @@ const InvoicesPage = async ({
     initialInvoices = data.invoices;
     totalCount = data.totalCount;
   } catch (error) {
-    console.error("Error fetching invoices:", error, error.digest);
     throw new Error("Error fetching invoices");
   }
 
