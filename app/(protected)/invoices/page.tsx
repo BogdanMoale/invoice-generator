@@ -49,7 +49,7 @@ const InvoicesPage = async ({
     const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
-        Cookie: `authjs.session-token=${sessionTokenAuthJs}`,
+        Cookie: `_Secure-authjs.session-token=${sessionTokenAuthJs}`,
       },
       cache: "no-store", // Ensures data is fresh on each fetch
     });
