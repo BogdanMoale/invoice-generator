@@ -5,16 +5,23 @@ import type { Metadata } from "next";
 
 async function fetchPaymentReceipt(paymentId: string): Promise<Payment> {
   const getCookie = async (name: string) => {
+    const secureCookie = cookies().get(`__Secure-${name}`);
+    if (secureCookie?.value) return secureCookie.value;
+
     return cookies().get(name)?.value ?? "";
   };
 
   const sessionTokenAuthJs = await getCookie("authjs.session-token");
   const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/payments/get/${paymentId}`;
 
+  const isProduction = process.env.NODE_ENV === "production";
+
   const res = await fetch(apiUrl, {
     method: "GET",
     headers: {
-      Cookie: `authjs.session-token=${sessionTokenAuthJs}`,
+      Cookie: isProduction
+        ? `__Secure-authjs.session-token=${sessionTokenAuthJs}`
+        : `authjs.session-token=${sessionTokenAuthJs}`,
     },
   });
 
