@@ -24,7 +24,7 @@ const InvoicesPage = async ({
 
   const getCookie = async (name: string) => {
     // Try production cookie name first (with _Secure- prefix)
-    const secureCookie = cookies().get(`_Secure-${name}`);
+    const secureCookie = cookies().get(`__Secure-${name}`);
     if (secureCookie?.value) return secureCookie.value;
 
     // Fallback to development cookie name
@@ -49,7 +49,7 @@ const InvoicesPage = async ({
     const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
-        Cookie: `_Secure-authjs.session-token=${sessionTokenAuthJs}`,
+        Cookie: `__Secure-authjs.session-token=${sessionTokenAuthJs}`,
       },
       cache: "no-store", // Ensures data is fresh on each fetch
     });
