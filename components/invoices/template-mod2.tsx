@@ -36,11 +36,11 @@ const InvoiceTemplateModel2: React.FC<InvoiceTemplateModelProps> = ({
   });
 
   return (
-    <Card ref={componentRef} className="w-full max-w-lg mx-auto">
-      <CardContent className="p-6">
+    <Card ref={componentRef} className="w-full max-w-lg mx-auto p-4 sm:p-6">
+      <CardContent className="p-0">
         <div className="grid gap-4">
           {/* Header Section */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <div className="flex flex-col leading-none">
               <h1 className="font-bold text-2xl">Invoice</h1>
               <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -50,7 +50,7 @@ const InvoiceTemplateModel2: React.FC<InvoiceTemplateModelProps> = ({
               </div>
             </div>
             {/* Invoice Details */}
-            <div className="ml-auto text-right">
+            <div className="ml-auto text-right sm:text-left">
               <dl className="grid gap-1 text-sm">
                 <div className="grid gap-1">
                   <dt className="inline font-medium">Due Date</dt>
@@ -71,7 +71,7 @@ const InvoiceTemplateModel2: React.FC<InvoiceTemplateModelProps> = ({
           <div className="border-t border-gray-200 dark:border-gray-800" />
 
           {/* Sender and Recipient Details */}
-          <div className="grid gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <div className="grid gap-1">
               <h2 className="font-semibold">{userCompanyName}</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -95,7 +95,7 @@ const InvoiceTemplateModel2: React.FC<InvoiceTemplateModelProps> = ({
           </div>
 
           {/* Invoice Items Table */}
-          <div className="border border-gray-200 rounded-lg dark:border-gray-800">
+          <div className="border border-gray-200 rounded-lg dark:border-gray-800 overflow-x-auto">
             <Table>
               <TableBody>
                 {items.map((item, index) => (
@@ -150,9 +150,9 @@ const InvoiceTemplateModel2: React.FC<InvoiceTemplateModelProps> = ({
       </CardContent>
 
       {/* Footer Section */}
-      <CardFooter className="border-t p-6 justify-end">
+      <CardFooter className="border-t p-6 justify-center sm:justify-end">
         <Button className="no-print" onClick={handlePrint}>
-          <FiDownload /> Download
+          <FiDownload className="mr-2" /> Download
         </Button>
       </CardFooter>
     </Card>
